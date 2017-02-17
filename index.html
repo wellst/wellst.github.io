@@ -1,0 +1,77 @@
+---
+layout: index
+title: "我分"
+---
+<div class="row">
+  <div class="col-md-2 col-xs-3">
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <img src="/images/indexhead.jpg" width="100%" alt="image" />
+      </div>
+    </div>
+    <div class="row m-top-3rem">
+      <div class="col-md-12 col-xs-12">
+        <a href="mailto:{{ site.email }}" class="btn btn-default btn-lg" aria-label="mail to wellst"><span class="glyphicon glyphicon-envelope"></span></a>
+      </div>
+    </div>
+    <div class="row m-top-3rem">
+      <div class="col-md-12 col-xs-12">
+		  <ul class="list-unstyled">
+          <li><a href="/life" class="list-group-item">日常</a></li>
+		  <li><a href="/code" class="list-group-item">代码</a></li>
+              <li><a href="/linux" class="list-group-item">Linux</a></li>
+          </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-10 col-xs-9">
+        <h1> {{ site.title }}</h1>  
+        {{ site.description }}
+        <div>
+          {% for post in paginator.posts %}  
+            <hr>
+          <div >
+          <h3><a href="{{post.url}}">{{ post.title }}</a></h3>
+          </div>
+            <div class="color-grey font-small">by Wellst on {{ post.date | date_to_string  }}  words:{{ post.content | number_of_words }}</div>
+            <div class="color-grey">-----------</div>
+          <div>
+            {{ post.excerpt }}
+          </div>
+          {% endfor %}
+        </div>
+        <!-- 分页链接 -->
+        {% if paginator.total_pages > 1 %}
+        <nav aria-label="Page navigation">
+          <ul class="pagination pagination-sm">
+          {% if paginator.previous_page %}
+            <li><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a></li>
+          {% else %}
+            <li class="disabled"><span aria-hidden="true">&laquo;</span></li>
+          {% endif %}
+
+          {% for page in (1..paginator.total_pages) %}
+            {% if page == paginator.page %}
+
+              <li class="active"><a href="#">{{ page }}</a></li>
+            {% elsif page == 1 %}
+              <li><a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a></li>
+            {% else %}
+              <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if paginator.next_page %}
+            <li><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+          {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+          {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
+  </div>
+</div>
